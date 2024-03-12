@@ -13,6 +13,6 @@ public class KafkaContorller {
 
     @PostMapping("/send")
     public void send(@RequestParam("message") String message){
-        producer.sendMessage("dev-topic",message);
+        producer.sendMessage("dev",message);
     }
 }

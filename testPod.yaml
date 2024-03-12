@@ -1,13 +1,41 @@
 apiVersion: v1
-kind: Pod
+kind: Service
 metadata:
-  name: nginx
-  labels:
-    app.kubernetes.io/name: proxy
+   name: my-cluster-kafka-0
 spec:
-  containers:
-  - name: nginx
-    image: nginx:1.14.2
-    ports:
-    - containerPort: 80
-      name: http-web-svc
+   type: NodePort
+   selector:
+     app: my-cluster-kafka-0
+   ports:
+       # By default and for convenience, the `targetPort` is set to the same value as the `port` field.
+     - port: 9092
+       targetPort: 9092
+       # Optional field
+       # By default and for convenience, the Kubernetes control plane will allocate a port from a range (default: 30000-32767)
+       nodePort: 30009
+
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: nginx-cl-svc
+#spec:
+#  type: ClusterIP
+#  selector:
+#    app: nginx
+#  ports:
+#    - name: http
+#      port: 80
+#      targetPort: 80
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: nginx-lb-svc
+# spec:
+#   selector:
+#     app: nginx
+#   type: LoadBalancer
+#   ports:
+#   - name: http
+#     port: 80
+#     targetPort: 80
